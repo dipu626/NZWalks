@@ -74,3 +74,5 @@ D:\Projects\PtProjects\NZWalks\NZWalks\NZWalks.API\obj\Debug\net7.0\refint\NZWal
 D:\Projects\PtProjects\NZWalks\NZWalks\NZWalks.API\obj\Debug\net7.0\NZWalks.API.pdb
 D:\Projects\PtProjects\NZWalks\NZWalks\NZWalks.API\obj\Debug\net7.0\NZWalks.API.genruntimeconfig.cache
 D:\Projects\PtProjects\NZWalks\NZWalks\NZWalks.API\obj\Debug\net7.0\ref\NZWalks.API.dll
+D:\Projects\PtProjects\NZWalks\NZWalks\NZWalks.API\bin\Debug\net7.0\AutoMapper.dll
+D:\Projects\PtProjects\NZWalks\NZWalks\NZWalks.API\bin\Debug\net7.0\AutoMapper.Extensions.Microsoft.DependencyInjection.dll
