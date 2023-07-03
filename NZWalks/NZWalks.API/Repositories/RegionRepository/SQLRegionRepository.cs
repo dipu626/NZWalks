@@ -6,11 +6,11 @@ using NZWalks.API.Models.DTO;
 
 namespace NZWalks.API.Repositories.RegionRepository
 {
-    public class SqlRegionRepository : IRegionRepository
+    public class SQLRegionRepository : IRegionRepository
     {
         private readonly NZWalksDbContext _dbContext;
 
-        public SqlRegionRepository(NZWalksDbContext dbContext)
+        public SQLRegionRepository(NZWalksDbContext dbContext)
         {
             this._dbContext = dbContext;
         }
@@ -18,7 +18,7 @@ namespace NZWalks.API.Repositories.RegionRepository
         public async Task<Region> AddAsync(Region region)
         {
             await _dbContext.Regions.AddAsync(region);
-            await _dbContext.SaveChangesAsync();    
+            await _dbContext.SaveChangesAsync();
             return region;
         }
 
