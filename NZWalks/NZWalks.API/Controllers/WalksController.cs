@@ -34,5 +34,14 @@ namespace NZWalks.API.Controllers
             WalkDto walkDto = mapper.Map<WalkDto>(walkDomainModel);
             return Ok(walkDto);
         }
+
+        // Get Walks
+        // GET: /api/walks
+        [HttpGet]
+        public async Task<IActionResult> GetAll()
+        {
+            var walkDomainModel = await walkRepository.GetWalks();
+            return Ok(mapper.Map<List<WalkDto>>(walkDomainModel));
+        }
     }
 }
