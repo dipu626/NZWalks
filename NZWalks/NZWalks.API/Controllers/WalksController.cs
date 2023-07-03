@@ -40,7 +40,7 @@ namespace NZWalks.API.Controllers
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
-            var walkDomainModel = await walkRepository.GetWalks();
+            var walkDomainModel = await walkRepository.GetAllAsync();
             return Ok(mapper.Map<List<WalkDto>>(walkDomainModel));
         }
     }
