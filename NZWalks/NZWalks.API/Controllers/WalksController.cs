@@ -43,5 +43,19 @@ namespace NZWalks.API.Controllers
             var walkDomainModel = await walkRepository.GetAllAsync();
             return Ok(mapper.Map<List<WalkDto>>(walkDomainModel));
         }
+
+        // Get Walk By Id
+        // GET: /api/walks/{id}
+        [HttpGet]
+        [Route("{id:Guid}")]
+        public async Task<IActionResult> GetById([FromRoute] Guid id)
+        {
+            Walk? walkDomainModel = await walkRepository.GetByIdAsync(id);
+            if (walkDomainModel == null)
+            {
+                return NotFound();
+            }
+            return Ok(mapper.Map<WalkDto>(walkDomainModel));
+        }
     }
 }
