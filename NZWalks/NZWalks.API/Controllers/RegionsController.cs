@@ -51,29 +51,36 @@ namespace NZWalks.API.Controllers
         [HttpPost]
         public async Task<IActionResult> Create([FromBody] AddRegionRequestDto addRegionRequestDto)
         {
-            // Use Domain Model to create Region
-            var regionDomainModel = await _regionRepository.AddAsync(_mapper.Map<Region>(addRegionRequestDto));
+            switch (ModelState.IsValid)
+            {
+                case true:
+                    Region regionDomainModel = await _regionRepository.AddAsync(_mapper.Map<Region>(addRegionRequestDto));
+                    RegionDto regionDto = _mapper.Map<RegionDto>(regionDomainModel);
+                    return CreatedAtAction(nameof(GetById), new { regionId = regionDto.Id }, regionDto);
 
-            // Map Domain Model to DTO
-            var regionDto = _mapper.Map<RegionDto>(regionDomainModel);
-
-            return CreatedAtAction(nameof(GetById), new { regionId = regionDto.Id }, regionDto);
+                default:
+                    return BadRequest(ModelState);
+            }
         }
 
-        // Update Region
+        // UPDATE Region
         // PUT: https://localhost:portnumber/api/regions/{regionId}
         [HttpPut]
         [Route("{regionId:Guid}")]
         public async Task<IActionResult> Update([FromRoute] Guid regionId, [FromBody] UpdateRegionRequestDto updateRegionRequestDto)
         {
-            var region = await _regionRepository.UpdateAsync(regionId, _mapper.Map<Region>(updateRegionRequestDto));
-
-            if (region == null)
+            switch (ModelState.IsValid)
             {
-                return NotFound();
+                case true:
+                    Region? region = await _regionRepository.UpdateAsync(regionId, _mapper.Map<Region>(updateRegionRequestDto));
+                    if (region == null)
+                    {
+                        return NotFound();
+                    }
+                    return Ok(_mapper.Map<RegionDto>(region));
+                default:
+                    return BadRequest(ModelState);
             }
-
-            return Ok(_mapper.Map<RegionDto>(region));
         }
 
         // Delete Region
