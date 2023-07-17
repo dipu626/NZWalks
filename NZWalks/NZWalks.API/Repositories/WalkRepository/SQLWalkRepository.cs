@@ -33,9 +33,27 @@ namespace NZWalks.API.Repositories.WalkRepository
             return walk;
         }
 
-        public async Task<List<Walk>> GetAllAsync()
+        public async Task<List<Walk>> GetAllAsync(string? filterOn = null, string? filterQuery = null)
         {
-            return await dbContext.Walks.Include("Difficulty").Include("Region").ToListAsync();
+            IQueryable<Walk> walks = dbContext.Walks.Include("Difficulty").Include("Region").AsQueryable();
+
+            if (string.IsNullOrWhiteSpace(filterOn) == false && string.IsNullOrWhiteSpace(filterQuery) == false)
+            {
+                switch (filterOn?.ToLower())
+                {
+                    case "name":
+                        walks = walks.Where(it => it.Name.Contains(filterQuery));
+                        break;
+                    case "description":
+                        walks = walks.Where(it => it.Description.Contains(filterQuery));
+                        break;
+                    default:
+                        break;
+                }
+            }
+
+            return await walks.ToListAsync();
+            //return await dbContext.Walks.Include("Difficulty").Include("Region").ToListAsync();
         }
 
         public async Task<Walk?> GetByIdAsync(Guid id)
@@ -67,6 +85,6 @@ namespace NZWalks.API.Repositories.WalkRepository
             return existingWalk;
         }
 
-        
+
     }
 }
