@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
+using NZWalks.API.CustomActionFilters;
 using NZWalks.API.Models.Domain;
 using NZWalks.API.Models.DTO;
 using NZWalks.API.Repositories.WalkRepository;
@@ -22,18 +23,12 @@ namespace NZWalks.API.Controllers
         // Create Walk
         // POST: /api/walks
         [HttpPost]
+        [ValidateModel]
         public async Task<IActionResult> Create([FromBody] AddWalkRequestDto addWalkRequestDto)
         {
-            switch (ModelState.IsValid)
-            {
-                case true:
-                    Walk walkDomainModel = mapper.Map<Walk>(addWalkRequestDto);
-                    await walkRepository.CreateAsync(walkDomainModel);
-                    return Ok(mapper.Map<WalkDto>(walkDomainModel));
-
-                default:
-                    return BadRequest(ModelState);
-            }
+            Walk walkDomainModel = mapper.Map<Walk>(addWalkRequestDto);
+            await walkRepository.CreateAsync(walkDomainModel);
+            return Ok(mapper.Map<WalkDto>(walkDomainModel));
         }
 
         // Get Walks
@@ -63,22 +58,16 @@ namespace NZWalks.API.Controllers
         // PUT: /api/walks/{id}
         [HttpPut]
         [Route("{id:Guid}")]
+        [ValidateModel]
         public async Task<IActionResult> Update([FromRoute] Guid id, UpdateWalkRequestDto updateWalkRequestDto)
         {
-            switch (ModelState.IsValid)
+            Walk walkDomainModel = mapper.Map<Walk>(updateWalkRequestDto);
+            Walk? updatedWalk = await walkRepository.UpdateAsync(id, walkDomainModel);
+            if (updatedWalk == null)
             {
-                case true:
-                    Walk walkDomainModel = mapper.Map<Walk>(updateWalkRequestDto);
-                    Walk? updatedWalk = await walkRepository.UpdateAsync(id, walkDomainModel);
-                    if (updatedWalk == null)
-                    {
-                        return NotFound();
-                    }
-                    return Ok(mapper.Map<WalkDto>(updatedWalk));
-
-                default:
-                    return BadRequest(ModelState);
+                return NotFound();
             }
+            return Ok(mapper.Map<WalkDto>(updatedWalk));
         }
 
         // Delete a Walk By Id
