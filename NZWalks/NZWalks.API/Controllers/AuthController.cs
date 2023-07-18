@@ -65,7 +65,7 @@ namespace NZWalks.API.Controllers
                 return BadRequest("Username or Password is wrong.");
             }
 
-            return Ok();
+
         }
     }
 }
