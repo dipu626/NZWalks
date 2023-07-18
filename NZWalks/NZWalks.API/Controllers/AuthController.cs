@@ -35,7 +35,7 @@ namespace NZWalks.API.Controllers
                 if (registerRequestDTO.Roles?.Any() == true)
                 {
                     identityResult = await userManager.AddToRolesAsync(identityUser, registerRequestDTO.Roles);
-                    
+
                     if (identityResult.Succeeded)
                     {
                         return Ok("User was registered! Please login. ");
@@ -44,6 +44,28 @@ namespace NZWalks.API.Controllers
             }
 
             return BadRequest("Something went wrong.");
+        }
+
+        // POST: /api/Auth/Login
+        [HttpPost]
+        [Route("Login")]
+        public async Task<IActionResult> Login([FromBody] LoginRequestDTO loginRequestDTO)
+        {
+            IdentityUser? user = await userManager.FindByEmailAsync(loginRequestDTO.Username);
+
+            if (user == null)
+            {
+                return BadRequest("Username or Password is wrong.");
+            }
+
+            bool isPasswordCorrect = await userManager.CheckPasswordAsync(user, loginRequestDTO.Password);
+
+            if (isPasswordCorrect == false)
+            {
+                return BadRequest("Username or Password is wrong.");
+            }
+
+            return Ok();
         }
     }
 }
