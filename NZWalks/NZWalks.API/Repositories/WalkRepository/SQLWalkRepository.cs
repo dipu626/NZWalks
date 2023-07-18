@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using NZWalks.API.Data;
 using NZWalks.API.Models.Domain;
 
@@ -70,7 +69,6 @@ namespace NZWalks.API.Repositories.WalkRepository
             int skipResults = (pageNumber - 1) * pageSize;
 
             return await walks.Skip(skipResults).Take(pageSize).ToListAsync();
-            //return await dbContext.Walks.Include("Difficulty").Include("Region").ToListAsync();
         }
 
         public async Task<Walk?> GetByIdAsync(Guid id)
