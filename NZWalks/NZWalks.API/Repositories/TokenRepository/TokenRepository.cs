@@ -15,7 +15,7 @@ namespace NZWalks.API.Repositories.TokenRepository
             this.configuration = configuration;
         }
 
-        public string CreateJWTToken(IdentityUser user, List<string> roles)
+        public string CreateJWTToken(IdentityUser user, IList<string> roles)
         {
             // CREATE CLAIMS
             List<Claim> claims = new()
@@ -34,9 +34,9 @@ namespace NZWalks.API.Repositories.TokenRepository
 
             JwtSecurityToken token = new(
                 configuration["Jwt:Issuer"],
-                configuration["Jwt: Audience"],
+                configuration["Jwt:Audience"],
                 claims,
-                expires: DateTime.Now.AddMinutes(15),
+                expires: DateTime.Now.AddMinutes(2),
                 signingCredentials: credentials
                 );
 

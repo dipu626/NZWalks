@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using NZWalks.API.Models.DTO.Auth;
+using NZWalks.API.Repositories.TokenRepository;
 
 namespace NZWalks.API.Controllers
 {
@@ -10,10 +11,13 @@ namespace NZWalks.API.Controllers
     public class AuthController : ControllerBase
     {
         private readonly UserManager<IdentityUser> userManager;
+        private readonly ITokenRepository tokenRepository;
 
-        public AuthController(UserManager<IdentityUser> userManager)
+        public AuthController(UserManager<IdentityUser> userManager,
+                               ITokenRepository tokenRepository)
         {
             this.userManager = userManager;
+            this.tokenRepository = tokenRepository;
         }
 
         // POST: /api/Auth/Register
@@ -52,20 +56,32 @@ namespace NZWalks.API.Controllers
         public async Task<IActionResult> Login([FromBody] LoginRequestDTO loginRequestDTO)
         {
             IdentityUser? user = await userManager.FindByEmailAsync(loginRequestDTO.Username);
-
+            BadRequestObjectResult badRequest = BadRequest("Username or Password is wrong.");
+            
             if (user == null)
             {
-                return BadRequest("Username or Password is wrong.");
+                return badRequest;
             }
 
             bool isPasswordCorrect = await userManager.CheckPasswordAsync(user, loginRequestDTO.Password);
 
             if (isPasswordCorrect == false)
             {
-                return BadRequest("Username or Password is wrong.");
+                return badRequest;
             }
 
+            // Get Roles for this user
+            IList<string> roles = await userManager.GetRolesAsync(user);
 
+            if (roles != null)
+            {
+                // CREATE TOKEN
+                string jwtToken = tokenRepository.CreateJWTToken(user, roles);
+
+                return Ok(new LoginResponseDTO { JwtToken = jwtToken });
+            }
+
+            return badRequest;
         }
     }
 }
