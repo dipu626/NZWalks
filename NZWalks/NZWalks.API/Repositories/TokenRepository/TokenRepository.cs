@@ -32,11 +32,15 @@ namespace NZWalks.API.Repositories.TokenRepository
 
             SigningCredentials credentials = new(key, SecurityAlgorithms.HmacSha256);
 
+            // Calculate the expiration time using UTC time
+            DateTime expirationDateTime = DateTime.UtcNow.AddMinutes(2);
+
+
             JwtSecurityToken token = new(
                 configuration["Jwt:Issuer"],
                 configuration["Jwt:Audience"],
                 claims,
-                expires: DateTime.Now.AddMinutes(2),
+                expires: expirationDateTime,
                 signingCredentials: credentials
                 );
 
