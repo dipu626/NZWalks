@@ -30,7 +30,7 @@ namespace NZWalks.API.Repositories.TokenRepository
 
             SymmetricSecurityKey key = new(Encoding.UTF8.GetBytes(configuration["Jwt:Key"]));
 
-            SigningCredentials credentials = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
+            SigningCredentials credentials = new(key, SecurityAlgorithms.HmacSha256);
 
             JwtSecurityToken token = new(
                 configuration["Jwt:Issuer"],

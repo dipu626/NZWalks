@@ -10,7 +10,6 @@ namespace NZWalks.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize]
     public class RegionsController : ControllerBase
     {
         private readonly IRegionRepository _regionRepository;
@@ -23,6 +22,7 @@ namespace NZWalks.API.Controllers
         }
 
         [HttpGet]
+        [Authorize(Roles = "Reader")]
         public async Task<IActionResult> GetAll()
         {
             // Get Data from Database
@@ -36,6 +36,7 @@ namespace NZWalks.API.Controllers
         // GET: https://localhost:portnumber/api/regions/{id}
         [HttpGet]
         [Route("{regionId:Guid}")]
+        [Authorize(Roles = "Reader")]
         public async Task<IActionResult> GetById([FromRoute] Guid regionId)
         {
             Region? region = await _regionRepository.GetByIdAsync(regionId);
@@ -52,6 +53,7 @@ namespace NZWalks.API.Controllers
         // POST: https://localhost:portnumber/api/regions
         [HttpPost]
         [ValidateModel]
+        [Authorize(Roles = "Writer")]
         public async Task<IActionResult> Create([FromBody] AddRegionRequestDto addRegionRequestDto)
         {
             Region regionDomainModel = await _regionRepository.AddAsync(_mapper.Map<Region>(addRegionRequestDto));
@@ -64,6 +66,7 @@ namespace NZWalks.API.Controllers
         [HttpPut]
         [Route("{regionId:Guid}")]
         [ValidateModel]
+        [Authorize(Roles = "Writer")]
         public async Task<IActionResult> Update([FromRoute] Guid regionId, [FromBody] UpdateRegionRequestDto updateRegionRequestDto)
         {
             Region? region = await _regionRepository.UpdateAsync(regionId, _mapper.Map<Region>(updateRegionRequestDto));
@@ -78,6 +81,7 @@ namespace NZWalks.API.Controllers
         // DELETE: https://localhost:portnumber/api/regions/{regionId}
         [HttpDelete]
         [Route("{regionId:Guid}")]
+        [Authorize(Roles = "Writer")]
         public async Task<IActionResult> Delete([FromRoute] Guid regionId)
         {
             var region = await _regionRepository.DeleteAsync(regionId);
