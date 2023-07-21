@@ -1,10 +1,11 @@
 {
   "version": 2,
-  "dgSpecHash": "carP/b/4Ax0afQIx5u91IJpHbW71r+CB/kaxiSob38MuV3DYe59aOVPdRxbpykDjsEx9UYgV279uvXRpnySVZQ==",
+  "dgSpecHash": "xyuRZ4oCIzX6e6DeSxgo1ReiUdfDAL8qYSe94JtlK5ow1BRYNu+8Rsmnfm9QSI9atz17SFRkwrc5b0JaYXJVwQ==",
   "success": true,
   "projectFilePath": "D:\\Projects\\PtProjects\\NZWalks\\NZWalks\\Web-API-Versioning.API\\Web-API-Versioning.API.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\dipuk\\.nuget\\packages\\microsoft.aspnetcore.mvc.versioning\\5.1.0\\microsoft.aspnetcore.mvc.versioning.5.1.0.nupkg.sha512",
+    "C:\\Users\\dipuk\\.nuget\\packages\\microsoft.aspnetcore.mvc.versioning.apiexplorer\\5.1.0\\microsoft.aspnetcore.mvc.versioning.apiexplorer.5.1.0.nupkg.sha512",
     "C:\\Users\\dipuk\\.nuget\\packages\\microsoft.aspnetcore.openapi\\7.0.9\\microsoft.aspnetcore.openapi.7.0.9.nupkg.sha512",
     "C:\\Users\\dipuk\\.nuget\\packages\\microsoft.extensions.apidescription.server\\6.0.5\\microsoft.extensions.apidescription.server.6.0.5.nupkg.sha512",
     "C:\\Users\\dipuk\\.nuget\\packages\\microsoft.openapi\\1.4.3\\microsoft.openapi.1.4.3.nupkg.sha512",

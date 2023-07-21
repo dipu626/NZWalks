@@ -32,3 +32,4 @@ D:\Projects\PtProjects\NZWalks\NZWalks\Web-API-Versioning.API\obj\Debug\net7.0\W
 D:\Projects\PtProjects\NZWalks\NZWalks\Web-API-Versioning.API\obj\Debug\net7.0\Web-API-Versioning.API.genruntimeconfig.cache
 D:\Projects\PtProjects\NZWalks\NZWalks\Web-API-Versioning.API\obj\Debug\net7.0\ref\Web-API-Versioning.API.dll
 D:\Projects\PtProjects\NZWalks\NZWalks\Web-API-Versioning.API\bin\Debug\net7.0\Microsoft.AspNetCore.Mvc.Versioning.dll
+D:\Projects\PtProjects\NZWalks\NZWalks\Web-API-Versioning.API\bin\Debug\net7.0\Microsoft.AspNetCore.Mvc.Versioning.ApiExplorer.dll
