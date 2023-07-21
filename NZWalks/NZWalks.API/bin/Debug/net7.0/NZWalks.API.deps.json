@@ -19,6 +19,7 @@
           "Serilog": "3.0.1",
           "Serilog.AspNetCore": "7.0.0",
           "Serilog.Sinks.Console": "4.1.0",
+          "Serilog.Sinks.File": "5.0.0",
           "Swashbuckle.AspNetCore": "6.5.0",
           "System.IdentityModel.Tokens.Jwt": "6.32.0"
         },

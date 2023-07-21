@@ -19,6 +19,7 @@ WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 
 Serilog.Core.Logger logger = new LoggerConfiguration()
     .WriteTo.Console()
+    .WriteTo.File("Logs/NzWalks_log.txt", rollingInterval: RollingInterval.Minute)
     .MinimumLevel.Warning()
     .CreateLogger();
 builder.Logging.ClearProviders();
