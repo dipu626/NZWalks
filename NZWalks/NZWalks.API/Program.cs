@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.FileProviders;
@@ -19,7 +20,7 @@ WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 
 Serilog.Core.Logger logger = new LoggerConfiguration()
     .WriteTo.Console()
-    .WriteTo.File("Logs/NzWalks_log.txt", rollingInterval: RollingInterval.Minute)
+    .WriteTo.File("Logs/NzWalks_log.txt", rollingInterval: RollingInterval.Day)
     .MinimumLevel.Warning()
     .CreateLogger();
 builder.Logging.ClearProviders();
@@ -106,6 +107,8 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
+app.UseMiddleware<NZWalks.API.Middlewares.ExceptionHandlerMiddleware>();
 
 app.UseHttpsRedirection();
 

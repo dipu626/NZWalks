@@ -30,18 +30,9 @@ namespace NZWalks.API.Controllers
         //[Authorize(Roles = "Reader")]
         public async Task<IActionResult> GetAll()
         {
-            try
-            {
-                throw new Exception("This is custom exception");
-                List<Region> regions = await regionRepository.GetAllAsync();
-                logger.LogInformation($"Finished GetAllRegions request with data: {JsonSerializer.Serialize(regions)}");
-                return Ok(mapper.Map<List<RegionDto>>(regions));
-            }
-            catch (Exception ex)
-            {
-                logger.LogError(ex, ex.Message);
-                throw;
-            }
+            List<Region> regions = await regionRepository.GetAllAsync();
+            logger.LogInformation($"Finished GetAllRegions request with data: {JsonSerializer.Serialize(regions)}");
+            return Ok(mapper.Map<List<RegionDto>>(regions));
         }
 
         // GET SINGLE REGION (Get Region By ID)
@@ -52,12 +43,10 @@ namespace NZWalks.API.Controllers
         public async Task<IActionResult> GetById([FromRoute] Guid regionId)
         {
             Region? region = await regionRepository.GetByIdAsync(regionId);
-
             if (region == null)
             {
                 return NotFound();
             }
-
             return Ok(mapper.Map<RegionDto>(region));
         }
 
