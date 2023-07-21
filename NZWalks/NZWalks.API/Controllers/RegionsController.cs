@@ -5,6 +5,7 @@ using NZWalks.API.CustomActionFilters;
 using NZWalks.API.Models.Domain;
 using NZWalks.API.Models.DTO;
 using NZWalks.API.Repositories.RegionRepository;
+using System.Text.Json;
 
 namespace NZWalks.API.Controllers
 {
@@ -12,24 +13,35 @@ namespace NZWalks.API.Controllers
     [ApiController]
     public class RegionsController : ControllerBase
     {
-        private readonly IRegionRepository _regionRepository;
-        private readonly IMapper _mapper;
+        private readonly IRegionRepository regionRepository;
+        private readonly IMapper mapper;
+        private readonly ILogger<RegionsController> logger;
 
-        public RegionsController(IRegionRepository regionRepository, IMapper mapper)
+        public RegionsController(IRegionRepository regionRepository,
+                                  IMapper mapper,
+                                   ILogger<RegionsController> logger)
         {
-            _regionRepository = regionRepository;
-            _mapper = mapper;
+            this.regionRepository = regionRepository;
+            this.mapper = mapper;
+            this.logger = logger;
         }
 
         [HttpGet]
-        [Authorize(Roles = "Reader")]
+        //[Authorize(Roles = "Reader")]
         public async Task<IActionResult> GetAll()
         {
-            // Get Data from Database
-            List<Region> regions = await _regionRepository.GetAllAsync();
-
-            // return DTOs
-            return Ok(_mapper.Map<List<RegionDto>>(regions));
+            try
+            {
+                throw new Exception("This is custom exception");
+                List<Region> regions = await regionRepository.GetAllAsync();
+                logger.LogInformation($"Finished GetAllRegions request with data: {JsonSerializer.Serialize(regions)}");
+                return Ok(mapper.Map<List<RegionDto>>(regions));
+            }
+            catch (Exception ex)
+            {
+                logger.LogError(ex, ex.Message);
+                throw;
+            }
         }
 
         // GET SINGLE REGION (Get Region By ID)
@@ -39,14 +51,14 @@ namespace NZWalks.API.Controllers
         [Authorize(Roles = "Reader")]
         public async Task<IActionResult> GetById([FromRoute] Guid regionId)
         {
-            Region? region = await _regionRepository.GetByIdAsync(regionId);
+            Region? region = await regionRepository.GetByIdAsync(regionId);
 
             if (region == null)
             {
                 return NotFound();
             }
 
-            return Ok(_mapper.Map<RegionDto>(region));
+            return Ok(mapper.Map<RegionDto>(region));
         }
 
         // POST To Create New Region
@@ -56,8 +68,8 @@ namespace NZWalks.API.Controllers
         [Authorize(Roles = "Writer")]
         public async Task<IActionResult> Create([FromBody] AddRegionRequestDto addRegionRequestDto)
         {
-            Region regionDomainModel = await _regionRepository.AddAsync(_mapper.Map<Region>(addRegionRequestDto));
-            RegionDto regionDto = _mapper.Map<RegionDto>(regionDomainModel);
+            Region regionDomainModel = await regionRepository.AddAsync(mapper.Map<Region>(addRegionRequestDto));
+            RegionDto regionDto = mapper.Map<RegionDto>(regionDomainModel);
             return CreatedAtAction(nameof(GetById), new { regionId = regionDto.Id }, regionDto);
         }
 
@@ -69,12 +81,12 @@ namespace NZWalks.API.Controllers
         [Authorize(Roles = "Writer")]
         public async Task<IActionResult> Update([FromRoute] Guid regionId, [FromBody] UpdateRegionRequestDto updateRegionRequestDto)
         {
-            Region? region = await _regionRepository.UpdateAsync(regionId, _mapper.Map<Region>(updateRegionRequestDto));
+            Region? region = await regionRepository.UpdateAsync(regionId, mapper.Map<Region>(updateRegionRequestDto));
             if (region == null)
             {
                 return NotFound();
             }
-            return Ok(_mapper.Map<RegionDto>(region));
+            return Ok(mapper.Map<RegionDto>(region));
         }
 
         // Delete Region
@@ -84,14 +96,14 @@ namespace NZWalks.API.Controllers
         [Authorize(Roles = "Writer")]
         public async Task<IActionResult> Delete([FromRoute] Guid regionId)
         {
-            var region = await _regionRepository.DeleteAsync(regionId);
+            var region = await regionRepository.DeleteAsync(regionId);
 
             if (region == null)
             {
                 return NotFound();
             }
 
-            return Ok(_mapper.Map<RegionDto>(region));
+            return Ok(mapper.Map<RegionDto>(region));
         }
     }
 }

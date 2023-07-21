@@ -83,3 +83,12 @@ D:\Projects\PtProjects\NZWalks\NZWalks\NZWalks.API\obj\Debug\net7.0\refint\NZWal
 D:\Projects\PtProjects\NZWalks\NZWalks\NZWalks.API\obj\Debug\net7.0\NZWalks.API.pdb
 D:\Projects\PtProjects\NZWalks\NZWalks\NZWalks.API\obj\Debug\net7.0\NZWalks.API.genruntimeconfig.cache
 D:\Projects\PtProjects\NZWalks\NZWalks\NZWalks.API\obj\Debug\net7.0\ref\NZWalks.API.dll
+D:\Projects\PtProjects\NZWalks\NZWalks\NZWalks.API\bin\Debug\net7.0\Serilog.dll
+D:\Projects\PtProjects\NZWalks\NZWalks\NZWalks.API\bin\Debug\net7.0\Serilog.AspNetCore.dll
+D:\Projects\PtProjects\NZWalks\NZWalks\NZWalks.API\bin\Debug\net7.0\Serilog.Extensions.Hosting.dll
+D:\Projects\PtProjects\NZWalks\NZWalks\NZWalks.API\bin\Debug\net7.0\Serilog.Extensions.Logging.dll
+D:\Projects\PtProjects\NZWalks\NZWalks\NZWalks.API\bin\Debug\net7.0\Serilog.Formatting.Compact.dll
+D:\Projects\PtProjects\NZWalks\NZWalks\NZWalks.API\bin\Debug\net7.0\Serilog.Settings.Configuration.dll
+D:\Projects\PtProjects\NZWalks\NZWalks\NZWalks.API\bin\Debug\net7.0\Serilog.Sinks.Console.dll
+D:\Projects\PtProjects\NZWalks\NZWalks\NZWalks.API\bin\Debug\net7.0\Serilog.Sinks.Debug.dll
+D:\Projects\PtProjects\NZWalks\NZWalks\NZWalks.API\bin\Debug\net7.0\Serilog.Sinks.File.dll

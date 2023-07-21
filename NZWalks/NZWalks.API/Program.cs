@@ -10,11 +10,19 @@ using NZWalks.API.Repositories.ImageRepository;
 using NZWalks.API.Repositories.RegionRepository;
 using NZWalks.API.Repositories.TokenRepository;
 using NZWalks.API.Repositories.WalkRepository;
+using Serilog;
 using System.Text;
 
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+
+Serilog.Core.Logger logger = new LoggerConfiguration()
+    .WriteTo.Console()
+    .MinimumLevel.Warning()
+    .CreateLogger();
+builder.Logging.ClearProviders();
+builder.Logging.AddSerilog(logger);
 
 builder.Services.AddControllers();
 builder.Services.AddHttpContextAccessor();
