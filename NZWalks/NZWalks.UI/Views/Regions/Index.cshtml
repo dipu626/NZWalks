@@ -15,6 +15,7 @@
             <th>Code</th>
             <th>Name</th>
             <th></th>
+            <th></th>
         </tr>
     </thead>
     <tbody>
@@ -26,6 +27,13 @@
                 <td>@region.Name</td>
                 <td>
                     <a class="btn btn-light" asp-controller="Regions" asp-action="Edit" asp-route-id="@region.Id">Edit</a>
+                </td>
+                <td>
+                    <form method="post" action="@Url.Action("Delete", "Regions")">
+                        @Html.AntiForgeryToken()
+                        <input type="hidden" name="id" value="@region.Id" />
+                        <button type="submit" class="btn btn-danger">Delete</button>
+                    </form>
                 </td>
             </tr>
         }

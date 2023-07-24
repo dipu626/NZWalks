@@ -56,7 +56,7 @@ namespace NZWalks.UI.Controllers
             httpResponseMessage.EnsureSuccessStatusCode();
 
             RegionDto? response = await httpResponseMessage.Content.ReadFromJsonAsync<RegionDto>();
-            
+
             if (response is not null)
             {
                 return RedirectToAction("Index", "Regions");
@@ -75,8 +75,54 @@ namespace NZWalks.UI.Controllers
             {
                 return View(response);
             }
-            
+
             return View(null);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Edit(RegionDto regionDto)
+        {
+            var client = httpClientFactory.CreateClient();
+            HttpRequestMessage httpRequestMessage = new()
+            {
+                Method = HttpMethod.Put,
+                RequestUri = new Uri($"https://localhost:7140/api/regions/{regionDto.Id}"),
+                Content = new StringContent(JsonSerializer.Serialize(regionDto), Encoding.UTF8, "application/json"),
+            };
+            HttpResponseMessage httpResponseMessage = await client.SendAsync(httpRequestMessage);
+            httpResponseMessage.EnsureSuccessStatusCode();
+
+            RegionDto? response = await httpResponseMessage.Content.ReadFromJsonAsync<RegionDto>();
+
+            if (response is not null)
+            {
+                return RedirectToAction("Index", "Regions");
+            }
+
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Delete(Guid id)
+        {
+            var client = httpClientFactory.CreateClient();
+            #region Long Code
+            //HttpRequestMessage httpRequestMessage = new()
+            //{
+            //    Method = HttpMethod.Delete,
+            //    RequestUri = new Uri($"https://localhost:7140/api/regions/{id}"),
+            //    Content = null
+            //};
+            //HttpResponseMessage httpResponseMessage = await client.SendAsync(httpRequestMessage);
+            //httpResponseMessage.EnsureSuccessStatusCode();
+            #endregion
+
+            HttpResponseMessage httpResponseMessage = await client.DeleteAsync($"https://localhost:7140/api/regions/{id}");
+            httpResponseMessage.EnsureSuccessStatusCode();
+
+            var response = httpResponseMessage.EnsureSuccessStatusCode();
+
+            return RedirectToAction("Index", "Regions");
         }
     }
 }
